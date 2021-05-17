@@ -52,14 +52,37 @@ select emp_no, dept_no
 
 -- wehere 절 #4: LIKE 검색
 -- 예제 : 1989년에 입사한 직원의 이름, 입사일을 출력
-select *
+select first_name, hire_date
   from employees
  where '1988-12-31' < hire_date
    and hire_date < '1990-01-01';
 
-select *
-  from employees
- where hire_date between '1988-12-31' and '1990-01-01';
+  select first_name, hire_date
+    from employees
+   where hire_date 
+ between '1988-12-31' and '1990-01-01';
+ 
+  select first_name, hire_date
+    from employees
+   where hire_date like '1989-%'; 
+ 
+ -- order by 절 #1
+ -- 예제1 : 남자 직원의 전체이름, 성별, 입사일을  입사일 순(선임부터)으로 출력
+  select first_name, gender, hire_date
+	from employees
+   where gender = 'm'
+order by hire_date asc;
+
+-- 예제2 : 직원들의 사번, 월급을 사번, 월급 순으로 출력.
+  select emp_no, salary
+	from salaries
+order by emp_no asc, salary desc;   
+
+ 
+  
+ 
+ 
+
 
 
  
