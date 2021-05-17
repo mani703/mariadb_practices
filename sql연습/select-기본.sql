@@ -26,3 +26,41 @@ select title from titles;
 --        한 번씩만 출력
 select distinct(title) from titles;
 
+-- wehere 절 #1
+-- 예제 : 1991년 이전에 입사한 직원의 이름, 성별, 입사일을 출력
+select first_name, gender, hire_date
+  from employees
+ where hire_date < '1991-01-01';
+
+-- wehere 절 #2: 논리연산자
+-- 예제 : 1989년 이전에 입사한 여직원의 이름, 입사일을 출력
+select first_name, hire_date
+  from employees
+ where gender = 'f'
+   and hire_date < '1989-01-01';
+
+-- wehere 절 #3: in 연산자
+-- 예제 : dept_emp 테이블에서 부서 번호가 d005나 d009에 속한 사원의 사번, 부서번호 출력
+select emp_no, dept_no
+  from dept_emp
+ where dept_no = 'd005'
+    or dept_no = 'd009';
+    
+select emp_no, dept_no
+  from dept_emp
+ where dept_no in ('d005', 'd009');
+
+-- wehere 절 #4: LIKE 검색
+-- 예제 : 1989년에 입사한 직원의 이름, 입사일을 출력
+select *
+  from employees
+ where '1988-12-31' < hire_date
+   and hire_date < '1990-01-01';
+
+select *
+  from employees
+ where hire_date between '1988-12-31' and '1990-01-01';
+
+
+ 
+ 
