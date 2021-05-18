@@ -55,7 +55,44 @@ order by b.salary desc;
 -- 현재 가장적은 평균 급여를 받고 있는 직책의 평균 급여를 구하세요
 -- engineer 34510
 -- 1) 직책별 평균급여
--- 2) 가장 적은 평균 급여
+  select a.title, avg(b.salary) as avg_salary
+	from titles a, salaries b
+   where a.emp_no = b.emp_no
+     and a.to_date = '9999-01-01'
+     and b.to_date = '9999-01-01'
+group by a.title
+order by avg_salary asc;
 
+-- sol1
+-- 2) 가장 적은 평균 급여
+select min(a.avg_salary)
+  from ( select a.title, avg(b.salary) as avg_salary
+	       from titles a, salaries b
+		  where a.emp_no = b.emp_no
+            and a.to_date = '9999-01-01'
+            and b.to_date = '9999-01-01'
+	   group by a.title) a;
  
- 
+  select a.title, avg(b.salary) as avg_salary
+	from titles a, salaries b
+   where a.emp_no = b.emp_no
+     and a.to_date = '9999-01-01'
+     and b.to_date = '9999-01-01'
+group by a.title
+  having round(avg_salary) = (select min(a.avg_salary)
+                                from (  select round(avg(b.salary)) as avg_salary
+	                                      from titles a, salaries b
+		                                 where a.emp_no = b.emp_no
+                                           and a.to_date = '9999-01-01'
+                                           and b.to_date = '9999-01-01'
+	                                  group by a.title) a);        
+       
+-- sol2: top-k
+  select a.title, avg(b.salary) as avg_salary
+	from titles a, salaries b
+   where a.emp_no = b.emp_no
+     and a.to_date = '9999-01-01'
+     and b.to_date = '9999-01-01'
+group by a.title
+order by avg_salary asc
+   limit 0, 1;
