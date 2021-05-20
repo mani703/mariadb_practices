@@ -31,7 +31,6 @@ public class AuthorDao {
 			System.out.println("error:" + e);
 		} finally {
 			try {
-				// 자원정리(clean-up)
 				if(pstmt != null) {
 					pstmt.close();
 				}

@@ -25,8 +25,8 @@ public class BookShop {
 		
 		List<BookVo> list = new BookDao().findAll();
 		for(BookVo vo : list) {
-			
+			String infos = String.format("[%02d] 책 제목: %s, 작가: %s, 대여유무:%s", vo.getNo(), vo.getTitle(), vo.getAuthorName(), vo.getStatus());
+			System.out.println(infos);
 		}
-		
 	}
 }
