@@ -9,6 +9,11 @@ desc book;
 select no, name from author;
 
 -- Book: insert
-insert into book values(null, ''
+insert into book values(null, '풀하우스', '대여가능', 1);
+
+-- Book: select
+select * from book;
+
+
  
 
