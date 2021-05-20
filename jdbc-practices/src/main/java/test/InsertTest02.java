@@ -2,10 +2,10 @@ package test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-public class InsertTest01 {
+public class InsertTest02 {
 
 	public static void main(String[] args) {
 		insert("영업");
@@ -15,7 +15,7 @@ public class InsertTest01 {
 	
 	public static boolean insert(String name) {
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		boolean result = false;
 		
 		try {
@@ -26,17 +26,20 @@ public class InsertTest01 {
 			String url = "jdbc:mysql://192.168.80.131:3307/employees?charset=utf8";
 			conn = DriverManager.getConnection(url, "hr", "hr");
 			
-			//3. Statement 생성
-			stmt = conn.createStatement();
-			
-			//4. SQL문을 실행
+			//3. SQL문 준비
 			String sql =
-				" insert" + 
-			    "   into dept" + 
-				" values (null, '" + name + "')";
+					" insert" + 
+				    "   into dept" + 
+					" values (null, ?)";
+			pstmt = conn.prepareStatement(sql);
 			
-			int count = stmt.executeUpdate(sql);
+			//4. 바인딩(Binding)
+			pstmt.setString(1, name);
+			
+			//5. SQL 실행
+			int count = pstmt.executeUpdate();
 			result = count == 1;
+			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
 		} catch (SQLException e) {
@@ -44,8 +47,8 @@ public class InsertTest01 {
 		} finally {
 			try {
 				// 자원정리(clean-up)
-				if(stmt != null) {
-					stmt.close();
+				if(pstmt != null) {
+					pstmt.close();
 				}
 				if(conn != null) {
 					conn.close();
