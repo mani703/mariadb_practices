@@ -14,3 +14,6 @@ select emp_no, birth_date, first_name
  -- delete
  delete from dept where no = 3; 
  
+ -- update
+ update dept set name='기획운영팀' where no = 4;
+ 
