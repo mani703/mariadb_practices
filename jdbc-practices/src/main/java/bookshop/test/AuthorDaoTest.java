@@ -4,6 +4,7 @@ import java.util.List;
 
 import bookshop.dao.AuthorDao;
 import bookshop.vo.AuthorVo;
+import bookshop.vo.BookVo;
 
 public class AuthorDaoTest {
 
